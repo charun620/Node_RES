@@ -9,7 +9,7 @@ const app = express();
 // parse incoming request
 app.use(express.json());
 
-// sample data
+// sample data(object array)
 let books = [
     {
         id : 1,
