@@ -4,13 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "format": "prettier --write *.js"
+    "start": "node src/index.js",
+    "format": "prettier --write *.js",
+    "dev" : "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charun620/Node_RES.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/charun620/Node_RES/issues"
+  },
+  "homepage": "https://github.com/charun620/Node_RES#readme",
   "devDependencies": {
+    "nodemon": "^3.0.1",
     "prettier": "^3.0.1"
   },
   "dependencies": {
