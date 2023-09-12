@@ -9,8 +9,8 @@ const DB = new sqlite3.Database("./Database/Book.sqlite");
 app.use(express.json());
 
 DB.run(`CREATE TABLE IF NOT EXISTS books ( 
-    id INTEGER PRIMARYKEY,
-    Title TEXT
+    id INTEGER PRIMARY KEY,
+    title TEXT,
     author TEXT
 )`);
 
@@ -41,10 +41,7 @@ app.get("/books/:id", (req, res) => {
 app.post("/books", (req, res) => {
   const book = req.body;
   DB.run(
-    "INSERT INTO books (title,author VALUES(?,?)",
-    book.title,
-    books.author,
-    function (err) {
+    "INSERT INTO books (title,author) VALUES(?,?)", book.title,book.author,function(err) {
       if (err) {
         res.status(500).send(err);
       } else {
@@ -56,10 +53,11 @@ app.post("/books", (req, res) => {
 });
 
 app.put("/books/:id", (req, res) => {
+  const book = req.body;
   DB.run(
     "UPDATE books SET title =?,author=? WHERE id = ?",
     book.title,
-    books.author,
+    book.author,
     req.params.id,
     function (err) {
       if (err) {
@@ -72,7 +70,7 @@ app.put("/books/:id", (req, res) => {
 });
 
 app.delete("/books/:id", (req, res) => {
-  DB.run("DELETE From WHERE id = ?", req.params.id, function (err) {
+  DB.run("DELETE From books WHERE id = ?", req.params.id, function (err) {
     if (err) {
       res.status(500).send(err);
     } else {
