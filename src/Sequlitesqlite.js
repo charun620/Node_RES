@@ -7,14 +7,14 @@ app.use(express.json());
 const sequelize = new Sequelize("database", "username", "password", {
   host: "localhost",
   dialect: "sqlite",
-  storage: "./Database/Book.sqlite"
+  storage: "./Database/SQBook.sqlite"
 });
 
 const Book = sequelize.define("book", {
   id: {
-    type: Sequelize.INTIGER,
+    type: Sequelize.INTEGER,
     autoIcrement: true,
-    primarykey: true,
+    primaryKey: true,
   },
   title: {
     type: Sequelize.STRING,
@@ -29,58 +29,49 @@ const Book = sequelize.define("book", {
 sequelize.sync();
 
 app.get("/books", (req, res) => {
-  Book.findAll()
-    .then(books => {
+  Book.findAll().then(books => {
       res.json(books);
-    })
-    .catch((err) => {
+    }).catch((err) => {
       res.status(500).send(err);
     });
 });
 
 app.get("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then(books => {
+  Book.findByPk(req.params.id).then(book => {
       if (!book) {
         res.status(404).send("Book not Found");
       } else {
         res.json(book);
       }
-    })
-    .catch(err => {
+    }).catch(err => {
       res.status(500).send(err);
     });
 });
 
 app.post("/books", (req, res) => {
-  Book.Create(req.body)
-    .then(book => {
+  Book.create(req.body).then(book => {
       res.send(book);
-    })
-    .catch(err => {
+    }).catch(err => {
       res.status(500).send(err);
     });
 });
 
 app.put("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then(books => {
+  Book.findByPk(req.params.id).then(book => {
       if (!book) {
         res.status(404).send("Book not Found");
       } else {
         book.update(req.body).then(() => {
           res.send(book);
         });
-      }
-    })
-    .catch(err => {
+    }
+  }).catch(err => {
       res.status(500).send(err);
     });
 });
 
 app.delete("/books/:id", (req, res) => {
-  Book.findByPk(req.params.id)
-    .then(books => {
+  Book.findByPk(req.params.id).then(book => {
       if (!book) {
         res.status(404).send("Book not Found");
       } else {
@@ -88,8 +79,7 @@ app.delete("/books/:id", (req, res) => {
           res.send({});
         });
       }
-    })
-    .catch(err => {
+    }).catch(err => {
       res.status(500).send(err);
     });
 });
